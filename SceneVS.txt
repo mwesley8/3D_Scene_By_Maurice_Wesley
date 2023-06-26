@@ -1,0 +1,26 @@
+#version 330 core
+layout(location = 0) in vec3 position; // Vertex data from Vertex Attrib Pointer 0
+layout(location = 1) in vec2 coord;
+layout(location = 2) in vec3 norm;
+
+
+out vec2 TexCoord;
+out vec3 Norm;
+out vec3 FragPos;             // Position of our object
+
+uniform mat4 shaderTransform; // 4x4 matrix variable for transforming vertex data
+uniform mat4 objectPosition;
+
+
+void main()
+{
+    gl_Position = shaderTransform * objectPosition * vec4(position.x, position.y, position.z, 1.0f); // transforms vertex data using matrix
+
+    TexCoord = coord;
+    
+    // Needed for diffuse lighting
+    Norm     = mat3(transpose(inverse(objectPosition))) * norm;  // handles stretching/scaling -> needed
+    
+    FragPos  = vec3(objectPosition * vec4(position, 1.0f));      // handles the area around the position
+}
+

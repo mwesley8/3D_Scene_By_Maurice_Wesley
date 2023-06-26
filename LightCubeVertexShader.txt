@@ -1,0 +1,13 @@
+#version 330 core
+layout(location = 0) in vec3 position; // Vertex data from Vertex Attrib Pointer 0
+
+
+uniform mat4 shaderTransform; // 4x4 matrix variable for transforming vertex data
+uniform mat4 objectPosition;
+
+void main()
+{
+    gl_Position = shaderTransform * objectPosition * vec4(position.x, position.y, position.z, 1.0f); // transforms vertex data using matrix
+
+}
+
